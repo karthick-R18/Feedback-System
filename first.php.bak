@@ -1,0 +1,33 @@
+<html>
+<body>
+	<h1>Update feedback</h1>
+	<form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" >
+		Enter regno : <input type="text" name="regno"><br><br>
+		Enter feedback : <textarea name="fb" rows="5" cols="50"></textarea><br><br>
+		<input type="submit">
+	</form>
+<?php
+$dbname="demo"; 
+$host="localhost"; 
+$password="";
+ $user="root";
+echo "connecting to $dbname with $user in $host<br>";
+$con=mysqli_connect($host,$user,$password,$dbname);
+if($con==false)
+die("error");
+else
+echo "connection established<br>";
+$regno=$_POST["regno"];	$fb=$_POST["fb"];
+echo "<br><br> hello $regno<br>";
+echo "<br>you entered <br> $regno <br> $fb <br>";
+$regno="'$regno'"; $fb="'$fb'";
+$qry="Update first set feedback=$fb where regno=$regno";
+$x=mysqli_query($con,$qry);
+if($x>0)
+	echo "<br>done";
+else if($x==0)
+	echo "<br>error";
+
+
+?>
+</html>

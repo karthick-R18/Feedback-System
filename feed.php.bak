@@ -1,0 +1,120 @@
+<html>
+<body bgcolor=#cccccc>
+	<?php
+	$type=$_POST["type"];
+	$regin=$_POST["regi"];
+
+	$dbname="feedback";
+	$host="localhost";
+	$user="root";
+	$password="";
+	$con=mysqli_connect($host,$user,$password,$dbname);
+
+	
+	echo "<h3>Selected subject is </h3>";
+	$q="select sub_name,term from subject_master where sub_code='$type'";
+	$qry2="select name,department,year from student_master where regno='$regin'";
+	$res=mysqli_query($con,$q);
+	$res2=mysqli_query($con,$qry2);
+	
+	if (mysqli_num_rows($res) > 0) 
+	{
+		$row = mysqli_fetch_assoc($res);
+		echo "<h2><u>".$row["sub_name"]."</u></h2>";
+		$term=$row["term"];
+	}
+
+	else
+	{
+		header("location:error.html");
+	}
+	if (mysqli_num_rows($res2) > 0) 
+	{
+		$row1 = mysqli_fetch_assoc($res2);
+		$sname=$row1["name"];$year=$row1["year"];$dept=$row1["department"];
+			
+	}
+
+	else
+	{
+		header("location:error.html");
+	}
+	
+	?>
+	
+	
+	
+	<h4>Give marks out of 5 for the questions listed below for <?php echo $row["sub_name"]; ?> teacher</h4>
+	<br><u>Questions</u><hr>
+
+	
+<form method="POST" action="thank.php" >
+	
+	<table>
+		<tr>
+			<td>1). Does the teacher taking extra steps for average students</td>
+			<td><select name=q1><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>
+			</td>
+		</tr>
+		<tr>
+			<td>2). Does the teacher uses black board while teaching?</td>
+			<td><select name=q2><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select></td>
+		</tr>
+		<tr>
+			<td>3). Does the teacher is good in language?</td>
+			<td><select name=q3><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select></td>
+		</tr>
+        <tr>
+			<td>4). Does the teacher maintains punctuality?</td>
+			<td><select name=q4><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select></td>
+		</tr>
+		<tr>
+			<td>5). Does the teacher teaches concepts linking real world example?</td>
+			<td><select name=q5><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select></td>			
+		</tr>
+		<tr>
+			<td>6). Does the teacher being friendly with students?</td>
+			<td><select name=q6><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select></td>
+		</tr>
+	</table>
+	<hr>
+	<h2>Comment down if you would like to</h2>
+		<br>
+		<textarea name="comment" rows="5" cols="145" placeholder="Enter your thoughts on the teacher"></textarea><br>
+		<input type="hidden" name="stregin" value="<?php echo $regin; ?>">		
+		<input type="hidden" name="stname" value="<?php echo $sname;?>">
+		<input type="hidden" name="stdept" value="<?php echo $dept;?>">
+		<input type="hidden" name="stterm" value="<?php echo $term;?>">
+		<input type="hidden" name="stcode" value="<?php echo $type;?>">
+		<input type="hidden" name="styear" value="<?php echo $year; ?>">
+
+
+ 
+<!--if(isset($_POST["q1"])&&isset($_POST["q2"])&&isset($_POST["q3"])&&isset($_POST["q4"])&&isset($_POST["q5"])&&isset($_POST["q6"]))
+{
+
+$q1=$_POST["q1"];$q2=$_POST["q2"];$q3=$_POST["q3"];$q4=$_POST["q4"];$q5=$_POST["q5"];$q6=$_POST["q6"];
+$comment=$_POST["comment"];
+
+$fqry="insert into fb values('$regin','$sname','$dept','$term','$q1','$q2','$q3','$q4','$q5','$q6','$comment','$type','$year')";
+$fres=mysqli_query($con,$fqry);
+if($fres>0)
+{
+	echo "success";
+}
+else
+{
+	echo "error occured";
+}
+}
+else
+{
+	echo "enter inputs";
+}
+
+-->
+<br>
+<center>
+<input type="submit" name="" value="Submit feedback"></center>
+	</form>
+</body>

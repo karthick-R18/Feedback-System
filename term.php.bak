@@ -1,0 +1,57 @@
+<html>
+<body bgcolor=#ccccff>
+	<?php
+	$dbname="feedback";
+	$host="localhost";
+	$user="root";
+	$password="";
+	$con=mysqli_connect($host,$user,$password,$dbname);
+	
+	$regno=$_POST["regno"];
+	$pass=$_POST["pass"];
+	#$regno="'$regno'";
+	$pass="'$pass'";
+	$q="select name,password from student_master where regno='$regno' and password=$pass";
+	$x=mysqli_query($con,$q);
+	if(mysqli_num_rows($x)>0)
+	{
+		$row=mysqli_fetch_assoc($x);
+		echo "Hello welcome Mr/Ms "."<h3>".$row["name"]."</h3>";
+	}
+	else
+	{
+		header("location:demo.html");
+	}
+	?>
+	<h1><center>Select your department and Term below</center></h1>
+	<hr><center>
+	<table border="1" cellpadding="5">
+		<tr>
+			<td>1</td><td>Civil</td>
+		</tr>
+		<tr>
+			<td>2</td><td>EEE</td>
+		</tr>
+		<tr>
+			<td>3</td><td>Mechanical</td>
+		</tr><tr>
+			<td>4</td><td>Computer</td>
+		</tr>
+		<tr>
+			<td>5</td><td>ECE</td>
+		</tr>
+	</table>
+</center><hr><br><br>
+	<form method="post" action=http://localhost/php/sub.php>
+		<center>
+		Department : <select name=dept><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option>
+		<br><br><br>
+		Term : <select name="type"><option value="I">I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option><option value="V">V</option><option value="VI">VI</option> </select><br><br> 
+		<input type="hidden" name="reg" value="<?php echo $regno;?>">
+		<input type="submit" value="select subject">
+		</center>
+	</form>
+
+
+</body>
+</html>
